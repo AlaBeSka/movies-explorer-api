@@ -11,7 +11,7 @@ const errorHandler = require('./middlewares/errorHandler');
 const { PORT = 3000, NODE_ENV, DB_URL } = process.env;
 const app = express();
 
-mongoose.connect((NODE_ENV === 'production' ? DB_URL : 'mongodb://127.0.0.1:27017/bitfilmsdb'), {
+mongoose.connect((NODE_ENV !== 'production' ? DB_URL : 'mongodb://127.0.0.1:27017/bitfilmsdb'), {
   useNewUrlParser: true,
 });
 
