@@ -3,6 +3,6 @@
 
 ## Ссылки на проект
 
-IP 51.250.107.110
+IP 158.160.73.70
 
 Backend api.diplom.alabeska.nomoredomains.xyz

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const Movie = require('../models/movie');
-const NotFoundError = require('../errors/notFound');
-const BadRequestError = require('../errors/badReq');
-const ForbiddenError = require('../errors/forbidden');
+const NotFoundError = require('../utils/errors/notFound');
+const BadRequestError = require('../utils/errors/badReq');
+const ForbiddenError = require('../utils/errors/forbidden');
 
 module.exports.getMovies = (req, res, next) => {
   Movie.find({ owner: req.user._id })

@@ -3,9 +3,9 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 const User = require('../models/user');
 require('dotenv').config();
-const NotFoundError = require('../errors/notFound');
-const BadRequestError = require('../errors/badReq');
-const ConflictError = require('../errors/conflict');
+const NotFoundError = require('../utils/errors/notFound');
+const BadRequestError = require('../utils/errors/badReq');
+const ConflictError = require('../utils/errors/conflict');
 
 const { NODE_ENV, JWT_SECRET } = process.env;
 
@@ -58,7 +58,9 @@ module.exports.updateUserInfo = async (req, res, next) => {
     res.send({ user });
   } catch (err) {
     if (err instanceof mongoose.Error.ValidationError) {
-      const message = Object.values(err.errors).map((error) => error.message).join('; ');
+      const message = Object.values(err.errors)
+        .map((error) => error.message)
+        .join('; ');
       next(new BadRequestError(message));
     } else {
       next(err);
@@ -76,21 +78,23 @@ module.exports.login = (req, res, next) => {
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
         { expiresIn: '7d' },
       );
-      res.status(200).cookie('jwt', token, {
-        maxAge: 3600000 * 24 * 7,
-        httpOnly: true,
-        sameSite: 'none',
-      }).send({ email, token });
+      res
+        .status(200)
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+          sameSite: 'none',
+        })
+        .send({ email, token });
     })
     .catch(next);
 };
 
 module.exports.register = (req, res, next) => {
-  const {
-    name, email, password,
-  } = req.body;
+  const { name, email, password } = req.body;
 
-  bcrypt.hash(password, 10)
+  bcrypt
+    .hash(password, 10)
     .then((hash) => User.create({
       name,
       email,
@@ -101,10 +105,16 @@ module.exports.register = (req, res, next) => {
     })
     .catch((err) => {
       if (err instanceof mongoose.Error.ValidationError) {
-        const message = Object.values(err.errors).map((error) => error.message).join('; ');
+        const message = Object.values(err.errors)
+          .map((error) => error.message)
+          .join('; ');
         next(new BadRequestError(message));
       } else if (err.code === 11000) {
-        next(new ConflictError('Пользователь с таким электронным адресом уже зарегистрирован'));
+        next(
+          new ConflictError(
+            'Пользователь с таким электронным адресом уже зарегистрирован',
+          ),
+        );
       } else {
         next(err);
       }

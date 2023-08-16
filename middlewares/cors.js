@@ -8,7 +8,6 @@ const allowedCors = [
   'http://diplom.alabeska.nomoredomains.xyz',
   'https://diplom.alabeska.nomoredomains.xyz',
   'http://158.160.73.70:3000',
-  'https://158.160.73.70:3000',
 ];
 
 module.exports = (req, res, next) => {
@@ -28,7 +27,7 @@ module.exports = (req, res, next) => {
   if (method === 'OPTIONS') {
     res.header('Access-Control-Allow-Methods', DEFAULT_ALLOWED_METHODS); // разрешаем кросс-доменные запросы любых типов (по умолчанию)
     res.header('Access-Control-Allow-Headers', requestHeaders); // разрешаем кросс-доменные запросы с этими заголовками
-    res.header('Access-Control-Allow-Credentials', true); // кукис с другого домена
+    res.header('Access-Control-Allow-Credentials', true);// кукис с другого домена
     return res.end(); // завершаем обработку запроса и возвращаем результат клиенту
   }
 

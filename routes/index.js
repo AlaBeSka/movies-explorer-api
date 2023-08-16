@@ -2,7 +2,7 @@ const router = require('express').Router();
 const { celebrate } = require('celebrate');
 const cors = require('cors');
 const auth = require('../middlewares/auth');
-const NotFoundError = require('../errors/notFound');
+const NotFoundError = require('../utils/errors/notFound');
 const { login, register } = require('../controllers/users');
 const { JoiBodyEmailPassword, JoiBodyEmailPasswordName } = require('../utils/joyValidation');
 
@@ -16,7 +16,6 @@ const allowedCors = [
   'http://diplom.alabeska.nomoredomains.xyz',
   'https://diplom.alabeska.nomoredomains.xyz',
   'http://158.160.73.70:3000',
-  'https://158.160.73.70:3000',
 ];
 
 router.use(cors({

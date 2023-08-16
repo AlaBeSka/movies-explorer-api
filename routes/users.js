@@ -8,4 +8,3 @@ router.get('/me', getUser);
 router.patch('/me', celebrate(JoiBodyNameEmail), updateUserInfo);
 
 module.exports = router;
-module.exports = router;
