@@ -7,8 +7,8 @@ const allowedCors = [
   'https://api.diplom.alabeska.nomoredomains.xyz',
   'http://diplom.alabeska.nomoredomains.xyz',
   'https://diplom.alabeska.nomoredomains.xyz',
-  'http://158.160.67.1:3000',
-  'https://158.160.67.1:3000',
+  'http://158.160.73.70:3000',
+  'https://158.160.73.70:3000',
 ];
 
 module.exports = (req, res, next) => {
