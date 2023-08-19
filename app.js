@@ -2,11 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 require('dotenv').config();
+const helmet = require('helmet');
+const { errors } = require('celebrate');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const cors = require('./middlewares/cors');
-const helmet = require('helmet');
-const { errors } = require("celebrate");
-const errorHandler = require("./middlewares/errorHandler");
+const errorHandler = require('./middlewares/errorHandler');
 
 const { PORT = 3000, NODE_ENV, DB_URL } = process.env;
 const app = express();
