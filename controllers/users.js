@@ -35,25 +35,25 @@ module.exports.updateUserInfo = async (req, res, next) => {
   const { name, email } = req.body;
 
   try {
-    // Проверяем, не зарегистрирован ли данный email
-    const emailRegistered = await isEmailRegistered(email);
-    if (emailRegistered) {
-      throw new ConflictError('Такой email уже зарегистрирован');
-    }
-
-    // Если email не зарегистрирован, обновляем информацию пользователя
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
-      { name, email },
-      {
-        new: true,
-        runValidators: true,
-      },
-    );
+    // Находим пользователя по ID
+    const user = await User.findById(req.user._id);
 
     if (!user) {
       throw new NotFoundError('Пользователь с указанным _id не найден');
     }
+
+    // Если email меняется, проверяем, не зарегистрирован ли уже новый email
+    if (user.email !== email) {
+      const emailRegistered = await isEmailRegistered(email);
+      if (emailRegistered) {
+        throw new ConflictError('Такой email уже зарегистрирован');
+      }
+    }
+
+    // Обновляем информацию пользователя
+    user.name = name;
+    user.email = email;
+    await user.save();
 
     res.send({ user });
   } catch (err) {
