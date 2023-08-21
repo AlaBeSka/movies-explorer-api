@@ -15,7 +15,7 @@ const allowedCors = [
   'https://api.diplom.alabeska.nomoredomains.xyz',
   'http://diplom.alabeska.nomoredomains.xyz',
   'https://diplom.alabeska.nomoredomains.xyz',
-  'http://51.250.28.121:3000',
+  'http://51.250.100.13:3000',
 ];
 
 router.use(cors({
